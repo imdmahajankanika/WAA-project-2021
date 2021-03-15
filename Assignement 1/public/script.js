@@ -21,6 +21,7 @@ addEventListener('load', () => {
 addEventListener('resize', () => {
     canvas.width = document.getElementById("drawingbox").clientWidth;
     canvas.height = document.getElementById("drawingbox").clientHeight;
+    document.getElementById("myImg").innerHTML=`<img width=${canvas.width} height=${canvas.height}>`
 })
 
 // Register the user before starting drawing
@@ -243,13 +244,11 @@ socket.on('share Line', (line) => {
   drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size)
 })
 
-// Open image in a new tab
-function openImg(){      
+// Display image 
+function displayImg(){      
   var myImageUrl = canvas.toDataURL("image/png"); 
   console.log(myImageUrl)
-  //window.open(myImageUrl);
-  window.open().document.write('<img src="' + myImageUrl + '" />');
-
-  }
+  document.getElementById("myImg").innerHTML=`<img src = ${myImageUrl} width=${canvas.width} height=${canvas.height}>`
+}
   
 
