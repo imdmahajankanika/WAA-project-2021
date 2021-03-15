@@ -1,4 +1,4 @@
-## Assignement 1 : Static html + js.* 
+## Assignement 1 : Static html + js.
 
 Starting from the live multiuser whiteboard drawing app, add the following feature
 
