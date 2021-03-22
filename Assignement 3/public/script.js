@@ -19,14 +19,20 @@ function onSuccess(response){
     var output= result.results;
     if(output.length>0){
       for(var res of output){
-        if((res["original_title"].toLowerCase()==movie.toLowerCase())&& res["release_date"] && res["poster_path"]){
+        if(res["original_title"].toLowerCase()==movie.toLowerCase()){
           console.log(res)
           title=res["original_title"]
           rel_date=res["release_date"]
           id=res["id"]
           credit_url=`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`
-          image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`
-          list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+          if(res["poster_path"]==null){
+            image='https://demofree.sirv.com/nope-not-here.jpg'
+            list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+          }
+          else{
+              image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`;
+              list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+          }
           document.getElementById("uList").innerHTML=list 
           movie_list.push(movie)
           //console.log("List of movies already entered:",movie_list)
@@ -60,8 +66,8 @@ for (var i = 0; i < rad.length; i++) {
 
 //Ask user to give director/actor full names and validate it
 function doValidateNames(){
-  var fname= document.getElementById('fname').value;
-  var lname = document.getElementById('lname').value;
+  var fname= (document.getElementById('fname').value).trim();
+  var lname = (document.getElementById('lname').value).trim();
   if(fname && lname){
     console.log("User entered '",fname+" " +lname+"' for movie "+movie)
     url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
@@ -70,7 +76,7 @@ function doValidateNames(){
       response.json().then(function(result){
         var output= result.results;
           for(var res of output){
-            if((res["original_title"].toLowerCase()==movie.toLowerCase())&& res["release_date"] && res["poster_path"]){
+            if(res["original_title"].toLowerCase()==movie.toLowerCase()){
               //console.log(res)
               id=res["id"]
               credit_url=`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`
@@ -96,8 +102,15 @@ function doValidateNames(){
                 flag=1
                 console.log("Director recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                director_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
-                document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
+                if(res["profile_path"]==null){
+                  director_photo= `https://demofree.sirv.com/nope-not-here.jpg`
+                  document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
+                }
+                else{
+                  director_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
+                  document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
+                }
+                
                 document.getElementById("movie_form").style.visibility="visible"
                 document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was director"
                 break;
@@ -124,8 +137,15 @@ function doValidateNames(){
                 flag=1;
                 console.log("Actor Recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                actor_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
-                document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
+                if(res["profile_path"]==null){
+                  actor_photo= `https://demofree.sirv.com/nope-not-here.jpg`
+                  document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
+                }
+                else{
+                  actor_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
+                  document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
+                }
+                
                 document.getElementById("movie_form").style.visibility="visible"
                 document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was actor"
                 break;
@@ -154,8 +174,8 @@ function doValidateNames(){
 function validate_movie(){
   var movie_name= (document.getElementById('movie_name').value).trim();
   console.log("List of movies already entered:",movie_list)
-  var fname= document.getElementById('fname').value;
-  var lname = document.getElementById('lname').value;
+  var fname= (document.getElementById('fname').value).trim();
+  var lname = (document.getElementById('lname').value).trim();
   if(movie_name&&fname&&lname){
     var flag=0;
     for(var i of movie_list){
@@ -184,8 +204,15 @@ function validate_movie(){
                 title=res["original_title"]
                 rel_date=res["release_date"]
                 credit_url=`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`
-                image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`
-                list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+                if(res["poster_path"]==null){
+                    image=`https://demofree.sirv.com/nope-not-here.jpg`
+                    list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+                }
+                else{
+                    image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`
+                    list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image}><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`
+                }
+                
                 fetch(credit_url).then(onResult);
                 break;
               }
