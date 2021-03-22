@@ -225,6 +225,7 @@ function sendData(data){
 function sendLine(data){
   socket.emit('send Line', data);
 }
+// Broadcasting changes for figures to all users
 socket.on('share figure', (figure) => {
   if(figure.shape == 'Triangle'){
       drawTriangle(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false)
@@ -237,14 +238,14 @@ socket.on('share figure', (figure) => {
   }
   
 })
-
+// Broadcasting changes for lines to all users
 socket.on('share Line', (line) => {
   let Last_User = document.getElementById('Last_User')
   Last_User.innerHTML = `Last user: <b>${line.user}</b>`
   drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size)
 })
 
-// Display image 
+// Get the image url from canvas and display it in div element below the canvas
 function displayImg(){      
   var myImageUrl = canvas.toDataURL("image/png"); 
   console.log(myImageUrl)

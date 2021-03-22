@@ -1,6 +1,7 @@
 // apikey from movieDB
 const apiKey="7fa0c35103d70d16a05ec9db5b02bffa"
-var movie_list=[]
+var movie_list = []
+// Default movie name
 var movie="Thor"
 console.log(movie)
 var url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
@@ -8,11 +9,10 @@ var credit_url
 var title, rel_date,image,id,director,actor,director_photo,actor_photo;
 var list="";
 
-//Default movie
+//show default movie on loading the page
 addEventListener('load', () => {
 fetch(url).then(onSuccess, onError);
 })
-
 
 function onSuccess(response){
   response.json().then(function(result){
@@ -47,12 +47,12 @@ function onSuccess(response){
    } 
   });
 }
-
+// if fetching the url results an error...
 function onError(error){
   console.log("Error: "+error);
 }
 
-// On change in radio buttons for director/actor, emptying the text fields
+// On change in radio buttons for director/actor, emptying the text fields for name, clearing the message and hiding the div element show actor/director info...
 var rad = document.quizForm.credits;
 for (var i = 0; i < rad.length; i++) {
     rad[i].addEventListener('change', function() {
@@ -64,10 +64,11 @@ for (var i = 0; i < rad.length; i++) {
 }
 
 
-//Ask user to give director/actor full names and validate it
+//Button onclick event to validate the actor/director names
 function doValidateNames(){
   var fname= (document.getElementById('fname').value).trim();
   var lname = (document.getElementById('lname').value).trim();
+    // Validate if both firstname and lastname fields are filled
   if(fname && lname){
     console.log("User entered '",fname+" " +lname+"' for movie "+movie)
     url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
@@ -102,7 +103,8 @@ function doValidateNames(){
                 flag=1
                 console.log("Director recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                if(res["profile_path"]==null){
+                  if (res["profile_path"] == null) {
+                    // If there is no image url in movieDB api, then use custom image to display '404'
                   director_photo= `https://demofree.sirv.com/nope-not-here.jpg`
                   document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
                 }
@@ -137,7 +139,8 @@ function doValidateNames(){
                 flag=1;
                 console.log("Actor Recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                if(res["profile_path"]==null){
+                  if (res["profile_path"] == null) {
+                    // If there is no image url in movieDB api, then use custom image to display '404'
                   actor_photo= `https://demofree.sirv.com/nope-not-here.jpg`
                   document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
                 }
@@ -164,18 +167,21 @@ function doValidateNames(){
       })
     }
   }
+   // If either of first name or last name field is empty, then push below alert
   else{
     alert('Please fill both "First name" and "Last name" fields!')
   }
   
 }
 
-// Ask for movie name where the person was director/actor
+
+// Button onclick event to validate the movie name where the person was director/actor
 function validate_movie(){
   var movie_name= (document.getElementById('movie_name').value).trim();
   console.log("List of movies already entered:",movie_list)
   var fname= (document.getElementById('fname').value).trim();
   var lname = (document.getElementById('lname').value).trim();
+    // Validate if user has filled movie name field
   if(movie_name&&fname&&lname){
     var flag=0;
     for(var i of movie_list){
