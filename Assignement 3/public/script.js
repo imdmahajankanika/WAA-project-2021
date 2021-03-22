@@ -1,21 +1,25 @@
+// apikey from movieDB
 const apiKey="7fa0c35103d70d16a05ec9db5b02bffa"
 var movie_list=[]
-var movie="Captain America: Civil War"
+var movie="Thor"
 console.log(movie)
 var url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
 var credit_url
 var title, rel_date,image,id,director,actor,director_photo,actor_photo;
 var list="";
+
+//Default movie
 addEventListener('load', () => {
 fetch(url).then(onSuccess, onError);
 })
+
 
 function onSuccess(response){
   response.json().then(function(result){
     var output= result.results;
     if(output.length>0){
       for(var res of output){
-        if(res["original_title"]&& res["release_date"] && res["poster_path"]){
+        if((res["original_title"].toLowerCase()==movie.toLowerCase())&& res["release_date"] && res["poster_path"]){
           console.log(res)
           title=res["original_title"]
           rel_date=res["release_date"]
@@ -42,6 +46,7 @@ function onError(error){
   console.log("Error: "+error);
 }
 
+// On change in radio buttons for director/actor, emptying the text fields
 var rad = document.quizForm.credits;
 for (var i = 0; i < rad.length; i++) {
     rad[i].addEventListener('change', function() {
@@ -65,7 +70,7 @@ function doValidateNames(){
       response.json().then(function(result){
         var output= result.results;
           for(var res of output){
-            if(res["original_title"]&& res["release_date"] && res["poster_path"]){
+            if((res["original_title"].toLowerCase()==movie.toLowerCase())&& res["release_date"] && res["poster_path"]){
               //console.log(res)
               id=res["id"]
               credit_url=`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`
@@ -94,6 +99,7 @@ function doValidateNames(){
                 director_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
                 document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
                 document.getElementById("movie_form").style.visibility="visible"
+                document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was director"
                 break;
               }
               
@@ -121,6 +127,7 @@ function doValidateNames(){
                 actor_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
                 document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
                 document.getElementById("movie_form").style.visibility="visible"
+                document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was actor"
                 break;
               }
           }
@@ -152,7 +159,7 @@ function validate_movie(){
   if(movie_name&&fname&&lname){
     var flag=0;
     for(var i of movie_list){
-      if(movie_name==i){
+      if(movie_name.toLowerCase()==i.toLowerCase()){
         flag=1;
         break;
       }
@@ -168,7 +175,6 @@ function validate_movie(){
         response.json().then(function(result){
           var output= result.results;
           if(output.length>0){
-            document.getElementById("valid_movie").style.visibility="visible"
             var flag=0
             for(var res of output){
               if((res["original_title"].toLowerCase()==movie_name.toLowerCase())){
@@ -184,6 +190,7 @@ function validate_movie(){
                 break;
               }
             }
+            document.getElementById("valid_movie").style.visibility="visible"
             if(flag==0){
               document.getElementById("new_msg").innerHTML=`<p style="color:Red;">"No results found!"</p>`
               document.getElementById("valid_movie").style.visibility="hidden"
@@ -211,7 +218,7 @@ function validate_movie(){
                   flag=1
                   console.log("Director recognised!")
                   document.getElementById("new_msg").innerHTML=`<p style="color:Green;">"Correct!"</p>`
-                  document.getElementById("valid_movie").innerHTML=list
+                  document.getElementById("uList2").innerHTML=list
                   movie=document.getElementById('movie_name').value
                   movie_list.push(movie)
                   break;
@@ -221,7 +228,7 @@ function validate_movie(){
             if(!flag){
               console.log("Movie not matched for director, Actual director:", director)
               document.getElementById("new_msg").innerHTML=`<p style="color:Red;">"Your answer is wrong!"</p>` 
-              document.getElementById("valid_movie").innerHTML=""               
+              document.getElementById("uList2").innerHTML=""               
             }
           }
           else{
@@ -235,7 +242,7 @@ function validate_movie(){
                   flag=1;
                   console.log("Actor Recognised!")
                   document.getElementById("new_msg").innerHTML=`<p style="color:Green;">"Correct!"</p>`
-                  document.getElementById("valid_movie").innerHTML=list
+                  document.getElementById("uList2").innerHTML=list
                   movie=document.getElementById('movie_name').value
                   movie_list.push(movie)
                   break;
@@ -243,7 +250,7 @@ function validate_movie(){
             }
             if(!flag){
               document.getElementById("new_msg").innerHTML=`<p style="color:Red;">"Your answer is wrong!"</p>`
-              document.getElementById("valid_movie").innerHTML=""               
+              document.getElementById("uList2").innerHTML=""               
             }
           }
         })
