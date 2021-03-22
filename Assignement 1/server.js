@@ -1,8 +1,12 @@
+'use strict';
+
 const app = require('express')();
 const express = require('express');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+//Port
 const port = process.env.PORT||3000;
+//App
 app.use('/canvas',express.static("public"))
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
