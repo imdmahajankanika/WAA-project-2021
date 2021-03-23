@@ -1,6 +1,7 @@
 // apikey from movieDB
 const apiKey="7fa0c35103d70d16a05ec9db5b02bffa"
-var movie_list=[]
+var movie_list = []
+// Default movie name
 var movie="Thor"
 console.log(movie)
 var url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
@@ -8,11 +9,10 @@ var credit_url
 var title, rel_date,image,id,director,actor,director_photo,actor_photo;
 var list="";
 
-//Default movie
+//show default movie on loading the page
 addEventListener('load', () => {
 fetch(url).then(onSuccess, onError);
 })
-
 
 function onSuccess(response){
   response.json().then(function(result){
@@ -47,29 +47,28 @@ function onSuccess(response){
    } 
   });
 }
-
+// if fetching the url results an error...
 function onError(error){
   console.log("Error: "+error);
 }
 
-// On change in radio buttons for director/actor, emptying the text fields
+// On change in radio buttons for director/actor, emptying the text fields for name, clearing the message and hiding the div element show actor/director info...
 var rad = document.quizForm.credits;
 for (var i = 0; i < rad.length; i++) {
     rad[i].addEventListener('change', function() {
       document.getElementById("msg").innerHTML=""
-      document.getElementById("fname").value=""
-      document.getElementById("lname").value=""
+      document.getElementById("name").value=""
       document.getElementById("credits_info").innerHTML=""
     });
 }
 
 
-//Ask user to give director/actor full names and validate it
+//Button onclick event to validate the actor/director names
 function doValidateNames(){
-  var fname= (document.getElementById('fname').value).trim();
-  var lname = document.getElementById('lname').value.trim();
-  if(fname && lname){
-    console.log("User entered '",fname+" " +lname+"' for movie "+movie)
+  var name= (document.getElementById('name').value).trim();
+    // Validate if name field is filled
+  if(name){
+    console.log("User entered '",name+"' for movie "+movie)
     url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`;
     fetch(url).then(onResponse);
     function onResponse(response){
@@ -90,7 +89,7 @@ function doValidateNames(){
     function onResult(response){
       response.json().then(function(result){
         const rbs = document.querySelectorAll('input[name="credits"]');
-        var entered_name=(fname.toLowerCase()+" "+lname.toLowerCase()).trim()
+        var entered_name=(name.toLowerCase()).trim()
         if(rbs[0]["checked"]){
           console.log("Director:",rbs[0]["checked"])
           var output= result.crew;
@@ -102,7 +101,8 @@ function doValidateNames(){
                 flag=1
                 console.log("Director recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                if(res["profile_path"]==null){
+                  if (res["profile_path"] == null) {
+                    // If there is no image url in movieDB api, then use custom image to display '404'
                   director_photo= `https://demofree.sirv.com/nope-not-here.jpg`
                   document.getElementById("credits_info").innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo}><img src=${director_photo}></a>`
                 }
@@ -112,7 +112,16 @@ function doValidateNames(){
                 }
                 
                 document.getElementById("movie_form").style.visibility="visible"
-                document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was director"
+                  document.getElementById("movie").innerHTML = "Enter  the name of a movie where the above person was director"
+                  document.getElementById('director').disabled = true;
+                  document.getElementById('actor').disabled = true;
+                  document.getElementById('name').disabled = true;
+                  document.getElementById('submit').disabled = true;
+                  document.getElementById('submit_movie').disabled = false;
+                  document.getElementById('movie_name').disabled = false;
+                  document.getElementById("movie_name").focus();
+                  document.getElementById('new_msg').innerHTML = "";
+                  document.getElementById("valid_movie").style.visibility = "hidden"
                 break;
               }
               
@@ -137,7 +146,8 @@ function doValidateNames(){
                 flag=1;
                 console.log("Actor Recognised!")
                 document.getElementById("msg").innerHTML=`<p style="color:Green;">"Correct!"</p> `
-                if(res["profile_path"]==null){
+                  if (res["profile_path"] == null) {
+                    // If there is no image url in movieDB api, then use custom image to display '404'
                   actor_photo= `https://demofree.sirv.com/nope-not-here.jpg`
                   document.getElementById("credits_info").innerHTML=`<strong> Actor Name: ${res["name"]}</strong> <br>  <a href=${actor_photo}><img src=${actor_photo}></a>`
                 }
@@ -147,7 +157,16 @@ function doValidateNames(){
                 }
                 
                 document.getElementById("movie_form").style.visibility="visible"
-                document.getElementById("movie").innerHTML="Enter  the name of a movie where the above person was actor"
+                  document.getElementById("movie").innerHTML = "Enter  the name of a movie where the above person was actor"
+                  document.getElementById('director').disabled = true;
+                  document.getElementById('actor').disabled = true;
+                  document.getElementById('name').disabled = true;
+                  document.getElementById('submit').disabled = true;
+                  document.getElementById('submit_movie').disabled = false;
+                  document.getElementById('movie_name').disabled = false;
+                  document.getElementById("movie_name").focus();
+                  document.getElementById('new_msg').innerHTML = "";
+                  document.getElementById("valid_movie").style.visibility = "hidden"
                 break;
               }
           }
@@ -164,19 +183,21 @@ function doValidateNames(){
       })
     }
   }
+   // If either of first name or last name field is empty, then push below alert
   else{
     alert('Please fill both "First name" and "Last name" fields!')
   }
   
 }
 
-// Ask for movie name where the person was director/actor
+
+// Button onclick event to validate the movie name where the person was director/actor
 function validate_movie(){
   var movie_name= (document.getElementById('movie_name').value).trim();
   console.log("List of movies already entered:",movie_list)
-  var fname= (document.getElementById('fname').value).trim();
-  var lname = (document.getElementById('lname').value).trim();
-  if(movie_name&&fname&&lname){
+  var name= (document.getElementById('name').value).trim();
+    // Validate if user has filled movie name field
+  if(movie_name&&name){
     var flag=0;
     for(var i of movie_list){
       if(movie_name.toLowerCase()==i.toLowerCase()){
@@ -188,7 +209,7 @@ function validate_movie(){
       alert('You have already entered '+movie_name+'\nPlease enter a different movie name!')
     }
     else{
-      console.log("Movie entered by user: "+movie_name+", where actor/director:",fname,lname)
+      console.log("Movie entered by user: "+movie_name+", where actor/director:",name)
       url= `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie_name}`;
       fetch(url).then(onConnect);
       function onConnect(response){
@@ -233,7 +254,7 @@ function validate_movie(){
       function onResult(response){
         response.json().then(function(result){
           const rbs = document.querySelectorAll('input[name="credits"]');
-          var entered_name=(fname.toLowerCase()+" "+lname.toLowerCase()).trim()
+          var entered_name=(name.toLowerCase()).trim()
           if(rbs[0]["checked"]){
             console.log("Director:",rbs[0]["checked"])
             var output= result.crew;
@@ -247,7 +268,17 @@ function validate_movie(){
                   document.getElementById("new_msg").innerHTML=`<p style="color:Green;">"Correct!"</p>`
                   document.getElementById("uList2").innerHTML=list
                   movie=document.getElementById('movie_name').value
-                  movie_list.push(movie)
+                    movie_list.push(movie)
+                    document.getElementById('submit_movie').disabled = true;
+                    document.getElementById('movie_name').disabled = true;
+                    document.getElementById('director').disabled = false;
+                    document.getElementById('actor').disabled = false;
+                    document.getElementById('name').disabled = false;
+                    document.getElementById('submit').disabled = false;
+                    document.getElementById('msg').innerHTML = "";
+                    document.getElementById("name").focus();
+                    document.getElementById("credits_info").innerHTML = ""
+                    document.getElementById("credit").innerHTML = `Enter the director/actor of movie "${movie}"`
                   break;
                 }
               }
@@ -271,8 +302,18 @@ function validate_movie(){
                   document.getElementById("new_msg").innerHTML=`<p style="color:Green;">"Correct!"</p>`
                   document.getElementById("uList2").innerHTML=list
                   movie=document.getElementById('movie_name').value
-                  movie_list.push(movie)
-                  break;
+                    movie_list.push(movie)
+                    document.getElementById('submit_movie').disabled = true;
+                    document.getElementById('movie_name').disabled = true;
+                    document.getElementById('director').disabled = false;
+                    document.getElementById('actor').disabled = false;
+                    document.getElementById('name').disabled = false;
+                    document.getElementById('submit').disabled = false;
+                    document.getElementById('msg').innerHTML = "";
+                    document.getElementById("name").focus();
+                    document.getElementById("credits_info").innerHTML = ""
+                    document.getElementById("credit").innerHTML = `Enter the director/actor of movie "${movie}"`
+                    break;
                 }
             }
             if(!flag){
