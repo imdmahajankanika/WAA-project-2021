@@ -22,11 +22,9 @@
                 <label for="director">Director</label>
                 <input type="radio" id="actor" name="credits" value="cast" checked="checked">
                 <label for="actor">Actor</label><br>
-                <p>Enter the director or one of the actors of movie </p>
-                <label for="fname"><strong>First name:</strong></label>
-                <input type="text" id="fname" name="fname" placeholder="Director/Actor First name" required="required"><br><br>
-                <label for="lname"><strong>Last name: </strong></label>
-                <input type="text" id="lname" name="lname" placeholder="Director/Actor Last name" required="required"><br><br>
+                <p id="credit">Enter the director or one of the actors of movie </p>
+                <label for="name"><strong>Full name:</strong></label>
+                <input type="text" id="name" name="name" placeholder="Director/Actor Full name" onfocus="this.value=''" required="required"><br><br>
                 <button id="submit" type="button" onclick="doValidateNames()">Submit</button><br>
                 <p id="msg"></p>
             </div>
@@ -41,7 +39,7 @@
             <div class="movie_details" id="movie_details">
                 <p id=movie>Enter  the name of a movie where the above person was actor/director</p>
                 <label for="movie_name"><strong>Movie name:</strong></label>
-                <input type="text" id="movie_name" name="movie_name" placeholder="Movie name" required="required"><br><br>
+                <input type="text" id="movie_name" name="movie_name" placeholder="Movie name" onfocus="this.value=''" required="required"><br><br>
                 <button id="submit_movie" type="button" onclick="validate_movie()">Submit</button><br>
                 <p id="new_msg"></p>
             </div>

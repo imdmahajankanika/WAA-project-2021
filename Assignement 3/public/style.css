@@ -94,6 +94,12 @@ button {
   display: inline-block;
   
 }
+#name:focus, a:active {
+    background-color: yellow;
+}
+#movie_name:focus, a:active {
+    background-color: yellow;
+}
 @media screen and (max-width:600px) {
   #uList img {
   width:100px;
