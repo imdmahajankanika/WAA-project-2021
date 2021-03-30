@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Movie Quiz</title>
+</head>
+<body>
+
+    <h1>Movie Quiz</h1>
+
+    <div class="movie_info" id="movie_info">
+        <ul id="uList">
+        </ul>
+    </div>
+    <!--Form for getting director/actor names from the user-->
+    <div class="form" id="form">
+        <form id="quizForm" name="quizForm">
+            <div class="details" id="details">
+                <input type="radio" id="director" name="credits" value="crew">
+                <label for="director">Director</label>
+                <input type="radio" id="actor" name="credits" value="cast" checked="checked">
+                <label for="actor">Actor</label><br>
+                <p id="credit">Enter the director or one of the actors of movie </p>
+                <label for="name"><strong>Full name:</strong></label>
+                <input type="text" id="name" name="name" placeholder="Director/Actor Full name" onfocus="this.value=''" required="required"><br><br>
+                <button id="submit" type="button" onclick="doValidateNames()">Submit</button><br>
+                <p id="msg"></p>
+            </div>
+        </form>
+    </div>
+    <!--Div element to display crew/cast (director/actor) of the movie-->
+    <div id="credits_info">
+    </div>
+    <!--Form for getting movie name from the user-->
+    <div class="movie_form" id="movie_form" style="visibility: hidden">
+        <form id="next_quizForm">
+            <div class="movie_details" id="movie_details">
+                <p id=movie>Enter  the name of a movie where the above person was actor/director</p>
+                <label for="movie_name"><strong>Movie name:</strong></label>
+                <input type="text" id="movie_name" name="movie_name" placeholder="Movie name" onfocus="this.value=''" required="required"><br><br>
+                <button id="submit_movie" type="button" onclick="validate_movie()">Submit</button><br>
+                <p id="new_msg"></p>
+            </div>
+        </form>
+    </div>
+    <!--Div element to display movie info-->
+    <div id="valid_movie" style="visibility: hidden">
+        <ul id="uList2">
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</body>
+
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</html>
