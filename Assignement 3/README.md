@@ -24,6 +24,6 @@ Users must never enter the same movie name twice. if they do , don't accept the 
 App is available on Heroku and can be accessed by below url:-
 https://movie-quiz-assignment-3.herokuapp.com
 
-** Note: index.php file is added to deploy static HTML on Heroku
+** Note: index.php file is added to deploy static HTML on Heroku **
 
 
