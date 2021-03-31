@@ -18,7 +18,7 @@ you can use the "Formidable" Node Module to handle file uploads : https://www.w3
 
 The assignement directory will contain your node.js file structure including server.js ( your main node code) package.json a public directory including your static files
 
-**Available on a public web url**
+##Available on a public web url
 
 App is available on Heroku and can be accessed by below url:-
 https://whiteboard-assignment-2.herokuapp.com

@@ -9,7 +9,7 @@ If you have trouble to display the image in a new tab, you can display it in a n
 
 use canvas.toDataURL() method
 
-**Available on a public web url**
+##Available on a public web url
 App is available on Heroku and can be accessed by below url.
 
 https://whiteboard-assignment-1.herokuapp.com/canvas/
