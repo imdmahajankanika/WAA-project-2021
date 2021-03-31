@@ -17,7 +17,7 @@ const DB_URI = `mongodb://localhost:27017/${DATABASE_NAME}`;
 const client = new MongoClient(process.env.MONGODB_URI || DB_URI);
 let collection = null;
 let db = null;
-
+// Connecting MongoClient
 async function GetCollection() {
   await client.connect();
   db = client.db(DATABASE_NAME)
@@ -25,7 +25,7 @@ async function GetCollection() {
 };
 GetCollection()
 
-
+// Render static files under public folder
 const port = process.env.PORT || 3000;
 app.use('/', express.static("public"))
 /*app.get('/', (req, res) => {
@@ -35,6 +35,8 @@ app.get('/index', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 */
+
+// Socket connection event
 io.on('connection', (socket) => {
   socket.on('send figure', (msg) => {
     io.emit('share figure', msg);
@@ -46,7 +48,7 @@ io.on('connection', (socket) => {
 const jsonParser = bodyParser.json()
 app.use(jsonParser)
 
-
+// Upload images on server
 app.post('/upload', (req, res, next) => {
   const form = formidable({ multiples: true });
   form.parse(req, function (err, fields, files) {
@@ -76,19 +78,18 @@ app.post('/upload', (req, res, next) => {
   });
 });
 
+// Get results from mongoDB and display them
 app.get("/display", (req, res) => {
-    db.collection('images').find({}).toArray(function (err, docs) { 
-    if (err) return res.status(500).send({error: err})
+  db.collection('images').find({}).toArray(function (err, docs) {
+    if (err) return res.status(500).send({ error: err })
     //console.log(docs)
-    res.send(docs.length>0?docs:'No Data'); 
+    res.send(docs.length > 0 ? docs : 'No Data');
 
   });
-  
+
 });
 
-
-
-
+// App is listening on 3000, locally
 http.listen(port, () => {
-  console.log('listening on *:3000');
+  console.log('listening on: ' + port);
 });

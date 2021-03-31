@@ -19,7 +19,7 @@ Create a movie quizz static web application using the tmdb api
 
 Users must never enter the same movie name twice. if they do , don't accept the answer and display an adapted error message.
 
-##Available on a public web url
+## Available on a public web url**
 
 App is available on Heroku and can be accessed by below url:-
 https://movie-quiz-assignment-3.herokuapp.com
