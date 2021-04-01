@@ -14,8 +14,8 @@ var socket = io();
 const ctx = canvas.getContext('2d')
 addEventListener('load', () => {
   document.getElementById('draw').disabled = true;
-  let input = document.getElementById('username')
-  input.value = ''
+  let input = document.getElementById('username');
+  input.value = '';
 })
 addEventListener('resize', () => {
   canvas.width = document.getElementById("drawingbox").clientWidth;
@@ -30,6 +30,11 @@ document.getElementById('username').addEventListener("keydown", function(event) 
     registerUser();
   }
 });
+
+// Clear canvas
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 function registerUser() {
   let input = document.getElementById('username')
@@ -259,11 +264,10 @@ socket.on('share Line', (line) => {
 })
 
 function save_image() {
-  var url = canvas.toDataURL("image/png")
+  var url = canvas.toDataURL("image/png");
   let now = new Date();
   let ts = (now.getDate()) + '.' + (now.getMonth() + 1) + '.' + now.getFullYear() + "_" + now.getHours() + '.'
-    + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + '.' + ((now.getSeconds() < 10) ? ("0" + now
-      .getSeconds()) : (now.getSeconds()))
+      + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + '.' + ((now.getSeconds() < 10) ? ("0" + now.getSeconds()) : (now.getSeconds()));
 
   let formData = new FormData()
   formData.append('username', username);
