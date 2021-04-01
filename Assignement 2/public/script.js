@@ -273,12 +273,12 @@ function save_image() {
     method: 'POST',
     body: formData
   })
-
+  alert(`Success! \n\nUser '${username}' saved the image!`);
 }
 
 function saved_images() {
   // Open new page
-  var newWin = window.open('');
+  var newWin = window.open("#saved_images", target = "_blank");
   var count = 0;
   fetch("/display")
     .then(function (response) {
@@ -288,16 +288,19 @@ function saved_images() {
       for (var { username, datetime, imgPath } of json) {
         console.log(`username : ${username}\ndatetime: ${datetime}\nimgPath:${imgPath}`)
         var relativePath = imgPath.split("public")[1].replace(/[\\]/g, "/");
+        console.log("Relative Path",relativePath)
         var img_div = document.createElement("div");
         img_div.id = `uid_${count}`;
         img_div.innerHTML = ` <ul id="uList_${count}" class="uList" style="list-style-type: none; text-align:left; display: inline-block; margin: 5px 0px; padding: 10px;background: #f9f9f9;border: 1px solid #dadada;"><li>  <strong> Username: ${username} </strong> <br><br> <strong> Image Url: </strong> <a href="${relativePath}" target="_blank">Link</a><br><br> <strong> DateTime: ${datetime}</strong><br> <br></li><ul>`;
         // Append the saved images data on new page
-        newWin.document.write(img_div.innerHTML)
+        newWin.document.write(img_div.innerHTML);
         count += 1;
       }
+        newWin.document.close();
     }, function onError(error) {
       //console.log("Error: "+error);
-      newWin.document.write(`<h2>Image not found in DB!</h2><p>Draw something on canvas and save the image!</p>`)
+      newWin.document.write(`<h2>Image not found in DB!</h2><p>Draw something on canvas and save the image!</p>`);
+      newWin.document.close();
     }
     );
 
