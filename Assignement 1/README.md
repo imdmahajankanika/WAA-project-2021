@@ -12,4 +12,4 @@ use canvas.toDataURL() method
 ## Available on a public web url**
 App is available on Heroku and can be accessed by below url.
 
-https://whiteboard-assignment-1.herokuapp.com/canvas/
+https://whiteboard-assignment-1.herokuapp.com

@@ -273,7 +273,7 @@ function validate_movie(count){
             var flag=0;
             for(var res of output){
               if((res["original_title"].toLowerCase()==movie_name.toLowerCase())){
-                console.log((res["original_title"].toLowerCase()==movie_name.toLowerCase()))
+                //console.log((res["original_title"].toLowerCase()==movie_name.toLowerCase()))
                 flag=1;
                 id=res["id"];
                 title=res["original_title"];

@@ -17,6 +17,7 @@ const DB_URI = `mongodb://localhost:27017/${DATABASE_NAME}`;
 const client = new MongoClient(process.env.MONGODB_URI || DB_URI);
 let collection = null;
 let db = null;
+
 // Connecting MongoClient
 async function GetCollection() {
   await client.connect();

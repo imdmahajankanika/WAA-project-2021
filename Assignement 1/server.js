@@ -7,9 +7,9 @@ const io = require('socket.io')(http);
 //Port
 const port = process.env.PORT||3000;
 //App
-app.use('/canvas', express.static("public"))
+app.use('/', express.static("public"))
 
-// Home Page
+/* Home Page
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
 });
@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 app.get('/index', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
   });
+*/
 
 // Socket connection
  io.on('connection', (socket) => {

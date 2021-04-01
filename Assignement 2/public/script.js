@@ -8,9 +8,13 @@ var shape = document.getElementById("shapes");
 var bg_color = document.getElementById("bgcolor");
 var border_col = document.getElementById("bordercolor");
 var border_thickness = document.getElementById("borderThickness");
-
 var socket = io();
+let isDrawing = false;
+let x = 0;
+let y = 0;
 
+
+// initiate canvas 2d context
 const ctx = canvas.getContext('2d')
 addEventListener('load', () => {
   document.getElementById('draw').disabled = true;
@@ -36,6 +40,7 @@ function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+// Register the user before starting drawing
 function registerUser() {
   let input = document.getElementById('username')
   let draw_btn = document.getElementById('draw')
@@ -66,7 +71,7 @@ function registerUser() {
 }
 
 
-
+// Draw figures
 function draw() {
   let shape = document.getElementById('shapes').value
   if (shape == 'Triangle') {
@@ -81,8 +86,8 @@ function draw() {
 
 }
 
+// Draw Triangle
 function drawTriangle(figSize = parseInt(document.getElementById('figureSize').value), borderSize = parseInt(document.getElementById('borderThickness').value), start = getStartingPoint(figSize, borderSize), border_color = document.getElementById('bordercolor').value, background_color = document.getElementById('bgcolor').value, new_fig = true) {
-
   ctx.beginPath();
   ctx.fillStyle = background_color;
   ctx.moveTo(start[0] - figSize / 2, start[1] - figSize / 2);
@@ -107,9 +112,8 @@ function drawTriangle(figSize = parseInt(document.getElementById('figureSize').v
     sendData(triangle)
   }
 }
-
+// Draw Square
 function drawSquare(figSize = parseInt(document.getElementById('figureSize').value), borderSize = parseInt(document.getElementById('borderThickness').value), start = getStartingPoint(figSize, borderSize), border_color = document.getElementById('bordercolor').value, background_color = document.getElementById('bgcolor').value, new_fig = true) {
-
   var width = figSize;
   ctx.fillStyle = background_color;
   ctx.fillRect(start[0], start[1], width, width);
@@ -129,9 +133,8 @@ function drawSquare(figSize = parseInt(document.getElementById('figureSize').val
     sendData(square)
   }
 }
-
+// Draw Circle
 function drawCircle(figSize = parseInt(document.getElementById('figureSize').value), borderSize = parseInt(document.getElementById('borderThickness').value), start = getStartingPoint(figSize, borderSize), border_color = document.getElementById('bordercolor').value, background_color = document.getElementById('bgcolor').value, new_fig = true) {
-
   var r = figSize / 2;
   ctx.beginPath();
   ctx.arc(start[0], start[1], r, 0, 2 * Math.PI);
@@ -156,6 +159,7 @@ function drawCircle(figSize = parseInt(document.getElementById('figureSize').val
 
 }
 
+// Set starting coordinates for figure
 function getStartingPoint(figSize, borderSize) {
   //let x = (Math.random()*(innerWidth - figSize - borderSize)) + borderSize
   //let y = (Math.random()*(innerHeight - figSize - borderSize)) + borderSize
@@ -164,11 +168,7 @@ function getStartingPoint(figSize, borderSize) {
   return [x, y]
 }
 
-let isDrawing = false;
-let x = 0;
-let y = 0;
-
-
+// Drawing line using pencil
 function drawLine(x1, y1, x2, y2, pencil_col = document.getElementById('pencilCol').value, pencil_size = document.getElementById('pencil_size').value) {
   // using a line between actual point and the last one solves the problem
   // if you make very fast circles, you will see polygons.
@@ -181,7 +181,7 @@ function drawLine(x1, y1, x2, y2, pencil_col = document.getElementById('pencilCo
   ctx.stroke();
   ctx.closePath();
 }
-
+/*
 function drawCircleAtCursor(x, y, canvas, event) {
   // Problem with draw circle is the refresh rate of the mousevent.
   // if you move too fast, circles are not connected.
@@ -197,7 +197,8 @@ function drawCircleAtCursor(x, y, canvas, event) {
   ctx.fillStyle = "#000"
   ctx.fill()
 }
-
+*/
+// Show username who drew last on canvas
 canvas.addEventListener('mousedown', function (e) {
   if (username != '') {
     const rect = canvas.getBoundingClientRect()
@@ -214,6 +215,7 @@ canvas.addEventListener('mousedown', function (e) {
   }
 })
 
+// On mousemove event, call the function to draw line on canvas
 canvas.addEventListener('mousemove', e => {
   if (isDrawing === true) {
     //drawCircleAtCursor(x,y,canvas, e)
@@ -226,6 +228,7 @@ canvas.addEventListener('mousemove', e => {
   }
 });
 
+// mouse release event
 window.addEventListener('mouseup', e => {
   if (isDrawing === true) {
     //drawCircleAtCursor(x,y,canvas, e)
@@ -236,7 +239,7 @@ window.addEventListener('mouseup', e => {
   }
 });
 
-
+// Send figures over network
 function sendData(data) {
   socket.emit('send figure', data);
 }
@@ -257,12 +260,14 @@ socket.on('share figure', (figure) => {
 
 })
 
+// Send lines drawn by mouse, over network
 socket.on('share Line', (line) => {
   let Last_User = document.getElementById('Last_User')
   Last_User.innerHTML = `Last user: <b>${line.user}</b>`
   drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size)
 })
 
+// Function to save images to server
 function save_image() {
   var url = canvas.toDataURL("image/png");
   let now = new Date();
@@ -280,6 +285,7 @@ function save_image() {
   alert(`Success! \n\nUser '${username}' saved the image!`);
 }
 
+// Function to display the saved images
 function saved_images() {
   // Open new page
   var newWin = window.open("#saved_images", target = "_blank");
