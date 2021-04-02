@@ -18,15 +18,15 @@ let y = 0;
 const ctx = canvas.getContext('2d')
 // Disable the draw button on load event to register the user first
 addEventListener('load', () => {
-  document.getElementById('draw').disabled = true;
-  let input = document.getElementById('username')
-  input.value = ''
-})
+    document.getElementById('draw').disabled = true;
+    let input = document.getElementById('username')
+    input.value = ''
+});
 // Reset the window size on resize event
 addEventListener('resize', () => {
-  canvas.width = document.getElementById("drawingbox").clientWidth;
-  canvas.height = document.getElementById("drawingbox").clientHeight;
-})
+    canvas.width = document.getElementById("drawingbox").clientWidth;
+    canvas.height = document.getElementById("drawingbox").clientHeight;
+});
 
 // Accept submission with the enter key
 document.getElementById('username').addEventListener("keydown", function(event) {
@@ -49,12 +49,14 @@ function registerUser() {
       draw_btn.disabled = false
     }
     username = input.value
+    user_message.style = "color:Green;"
     user_message.innerHTML = `You are now logged in as : <b>${username}</b>`
 
   }
   else {
     if (draw_btn.disabled == false) { draw_btn.disabled = true }
     username = input.value
+    user_message.style = "color:Red;"
     user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`
 
   }
@@ -202,8 +204,9 @@ canvas.addEventListener('mousedown', function (e) {
     isDrawing = true
   }
   else {
-    let user_message = document.getElementById('user_message')
-    user_message.innerHTML = `Not registered! Please register to use canvas`
+    let user_message = document.getElementById('user_message');
+    user_message.style = "color:Red;";
+    user_message.innerHTML = `Not registered! Please register to use canvas`;
   }
 })
 

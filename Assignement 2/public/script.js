@@ -17,14 +17,14 @@ let y = 0;
 // initiate canvas 2d context
 const ctx = canvas.getContext('2d')
 addEventListener('load', () => {
-  document.getElementById('draw').disabled = true;
-  let input = document.getElementById('username');
-  input.value = '';
-})
+    document.getElementById('draw').disabled = true;
+    let input = document.getElementById('username');
+    input.value = '';
+});
 addEventListener('resize', () => {
-  canvas.width = document.getElementById("drawingbox").clientWidth;
-  canvas.height = document.getElementById("drawingbox").clientHeight;
-})
+    canvas.width = document.getElementById("drawingbox").clientWidth;
+    canvas.height = document.getElementById("drawingbox").clientHeight;
+});
 
 // Accept submission with the enter key
 document.getElementById('username').addEventListener("keydown", function(event) {
@@ -57,14 +57,16 @@ function registerUser() {
     if (save_btn.disabled == true) {
       save_btn.disabled = false
     }
-    username = input.value
-    user_message.innerHTML = `You are now logged in as : <b>${username}</b>`
+    username = input.value;
+    user_message.style = "color:Green;";
+    user_message.innerHTML = `You are now logged in as : <b>${username}</b>`;
 
   }
   else {
     if (draw_btn.disabled == false) { draw_btn.disabled = true }
     if (save_btn.disabled == false) { save_btn.disabled = true }
-    username = input.value
+    username = input.value;
+    user_message.style = "color:Red;";
     user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`
 
   }
@@ -210,7 +212,8 @@ canvas.addEventListener('mousedown', function (e) {
     isDrawing = true
   }
   else {
-    let user_message = document.getElementById('user_message')
+    let user_message = document.getElementById('user_message');
+    user_message.style = "color:Red;";
     user_message.innerHTML = `Not registered! Please register to use canvas`
   }
 })
@@ -296,12 +299,14 @@ function saved_images() {
     })
     .then(function (json) {
       for (var { username, datetime, imgPath } of json) {
-        console.log(`username : ${username}\ndatetime: ${datetime}\nimgPath:${imgPath}`)
+        console.log(`username : ${username}\ndatetime: ${datetime}\nimgPath:${imgPath}`);
+        var date = datetime.split("_")[0].replace(/[\.]/g, "/");
+        var time = datetime.split("_")[1].replace(/[.]/g, ":")
         var relativePath = imgPath.split("public")[1].replace(/[\\]/g, "/");
         console.log("Relative Path",relativePath)
         var img_div = document.createElement("div");
         img_div.id = `uid_${count}`;
-        img_div.innerHTML = ` <ul id="uList_${count}" class="uList" style="list-style-type: none; text-align:left; display: inline-block; margin: 5px 0px; padding: 10px;background: #f9f9f9;border: 1px solid #dadada;"><li>  <strong> Username: ${username} </strong> <br><br> <strong> Image Url: </strong> <a href="${relativePath}" target="_blank">Link</a><br><br> <strong> DateTime: ${datetime}</strong><br> <br></li><ul>`;
+        img_div.innerHTML = ` <ul id="uList_${count}" class="uList" style="list-style-type: none; text-align:left; display: inline-block; margin: 5px 0px; padding: 10px;background: #f9f9f9;border: 1px solid #dadada;"><li>  <strong> Username: ${username} </strong> <br><br> <strong> Image Url: </strong> <a href="${relativePath}" target="_blank">Link</a><br><br> <strong> DateTime: ${date} ${time}</strong><br> <br></li><ul>`;
         // Append the saved images data on new page
         newWin.document.write(img_div.innerHTML);
         count += 1;
