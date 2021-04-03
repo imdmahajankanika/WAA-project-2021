@@ -12,8 +12,8 @@ var count=0;
 
 //show default movie on loading the page
 addEventListener('load', () => {
-fetch(url).then(onSuccess, onError);
-})
+  fetch(url).then(onSuccess, onError);
+});
 
 function onSuccess(response){
   response.json().then(function(result){
@@ -31,8 +31,8 @@ function onSuccess(response){
             list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image} target="_blank"><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`;
           }
           else{
-              image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`;
-              list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image} target="_blank"><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`;
+            image=`https://image.tmdb.org/t/p/w500${res["poster_path"]}`;
+            list=`<li>  <strong> Movie Title: ${title} </strong> <a href=${image} target="_blank"><img src=${image}></a><br><br> <strong> Release Date: ${rel_date}</strong><br> <br></li>`;
           }
           document.getElementById("uList").innerHTML=list;
           movie_list.push(movie);
@@ -42,8 +42,8 @@ function onSuccess(response){
         }
       }
     }
-   else{
-     list+=`<li> <p> <strong> No Result Found! </strong> </p> <br> </li>`;
+    else{
+      list+=`<li> <p> <strong> No Result Found! </strong> </p> <br> </li>`;
       document.getElementById("uList").innerHTML=list;
     } 
   });
@@ -111,7 +111,7 @@ function doValidateNames(count){
     }
     function onResult(response){
       response.json().then(function(result){
-        var entered_name=(name.toLowerCase()).trim()
+        var entered_name=(name.toLowerCase()).trim();
         var flag=0;
         if(flag==0){
           var crew= result.crew;
@@ -120,7 +120,7 @@ function doValidateNames(count){
           var flag_actor=0;
           for(var res of crew){
             if(res["job"] == 'Director'){
-              director=res["name"].toLowerCase()
+              director=res["name"].toLowerCase();
               if(director==entered_name){
                 flag_director=1;
                 console.log("Director recognised!");
@@ -131,7 +131,7 @@ function doValidateNames(count){
                   document.getElementById(`credits_info_${count}`).innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo} target="_blank"><img src=${director_photo}></a> <br>`;
                 }
                 else{
-                  director_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`
+                  director_photo= `https://image.tmdb.org/t/p/w500${res["profile_path"]}`;
                   document.getElementById(`credits_info_${count}`).innerHTML=`<strong> Director Name: ${res["name"]}</strong> <br>  <a href=${director_photo} target="_blank"><img src=${director_photo}></a> <br>`;
                 }
                 document.getElementById(`name_${count}`).disabled = true;
@@ -178,7 +178,7 @@ function doValidateNames(count){
             document.getElementById(`credits_info_${count}`).innerHTML="";
           }
         }
-      })
+      });
     }
   }
   // If name field is empty, then push below alert
@@ -193,7 +193,7 @@ function creditInfo(count){
   var infoDiv = document.createElement("div");
   //Set its unique ID.
   infoDiv.id = `credits_info_${count}`;
-  infoDiv.className = "credits_info"
+  infoDiv.className = "credits_info";
   //Add your content to the DIV
   infoDiv.innerHTML = "";
   //Finally, append the element to the HTML body
