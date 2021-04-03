@@ -1,6 +1,6 @@
 # WAA-project-2021
 
-### <u>Public web Urls for all assignments</u>:-
+### <ins>Public web Urls for all assignments</ins>:-
 <ul>
 <li><b>Assignment 1:-</b> https://whiteboard-assignment-1.herokuapp.com </li>
 <li><b>Assignment 2:-</b> https://whiteboard-assignment-2.herokuapp.com </li>
