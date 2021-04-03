@@ -1,7 +1,7 @@
-var figs = []
-var username = ''
+var figs = [];
+var username = '';
 var figure_size = document.getElementById("figureSize");
-const canvas = document.querySelector('#myCanvas')
+const canvas = document.querySelector('#myCanvas');
 canvas.width = document.getElementById("drawingbox").clientWidth;
 canvas.height = document.getElementById("drawingbox").clientHeight;
 var shape = document.getElementById("shapes");
@@ -15,12 +15,12 @@ let y = 0;
 
 
 // initiate canvas 2d context
-const ctx = canvas.getContext('2d')
+const ctx = canvas.getContext('2d');
 // Disable the draw button on load event to register the user first
 addEventListener('load', () => {
     document.getElementById('draw').disabled = true;
-    let input = document.getElementById('username')
-    input.value = ''
+    let input = document.getElementById('username');
+    input.value = '';
 });
 // Reset the window size on resize event
 addEventListener('resize', () => {
@@ -39,47 +39,45 @@ document.getElementById('username').addEventListener("keydown", function(event) 
 
 // Register the user before starting drawing
 function registerUser() {
-  let input = document.getElementById('username')
-  let draw_btn = document.getElementById('draw')
-  let user_message = document.getElementById('user_message')
+  let input = document.getElementById('username');
+  let draw_btn = document.getElementById('draw');
+  let user_message = document.getElementById('user_message');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (input.value.length >= 6) {
     //Unlock draw button
     if (draw_btn.disabled == true) {
-      draw_btn.disabled = false
+      draw_btn.disabled = false;
     }
-    username = input.value
-    user_message.style = "color:Green;"
-    user_message.innerHTML = `You are now logged in as : <b>${username}</b>`
+    username = input.value;
+    user_message.style = "color:Green;";
+    user_message.innerHTML = `You are now logged in as : <b>${username}</b>`;
 
   }
   else {
     if (draw_btn.disabled == false) { draw_btn.disabled = true }
-    username = input.value
-    user_message.style = "color:Red;"
-    user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`
-
+    username = input.value;
+    user_message.style = "color:Red;";
+    user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`;
   }
 }
 
 // Draw figures
 function draw() {
-  let shape = document.getElementById('shapes').value
+  let shape = document.getElementById('shapes').value;
   if (shape == 'Triangle') {
-    drawTriangle()
+    drawTriangle();
   }
   else if (shape == 'Square') {
-    drawSquare()
+    drawSquare();
   }
   else if (shape == 'Circle') {
-    drawCircle()
+    drawCircle();
   }
 
 }
 
 // Draw Triangle
 function drawTriangle(figSize = parseInt(document.getElementById('figureSize').value), borderSize = parseInt(document.getElementById('borderThickness').value), start = getStartingPoint(), border_color = document.getElementById('bordercolor').value, background_color = document.getElementById('bgcolor').value, new_fig = true) {
-
   ctx.beginPath();
   ctx.fillStyle = background_color;
   ctx.moveTo(start[0] - figSize / 2, start[1] - figSize / 2);
@@ -101,7 +99,7 @@ function drawTriangle(figSize = parseInt(document.getElementById('figureSize').v
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(triangle)
+    sendData(triangle);
   }
 }
 
@@ -123,7 +121,7 @@ function drawSquare(figSize = parseInt(document.getElementById('figureSize').val
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(square)
+    sendData(square);
   }
 }
 
@@ -148,7 +146,7 @@ function drawCircle(figSize = parseInt(document.getElementById('figureSize').val
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(circle)
+    sendData(circle);
   }
 
 }
@@ -157,7 +155,7 @@ function drawCircle(figSize = parseInt(document.getElementById('figureSize').val
 function getStartingPoint() {
   var x = Math.floor(Math.random() * (canvas.width));
   var y = Math.round(Math.random() * (canvas.height));
-  return [x, y]
+  return [x, y];
 }
 
 
@@ -195,20 +193,20 @@ function drawCircleAtCursor(x, y, canvas, event) {
 // Show username who drew last on canvas
 canvas.addEventListener('mousedown', function (e) {
   if (username != '') {
-    const rect = canvas.getBoundingClientRect()
-    x = e.clientX - rect.left
-    y = e.clientY - rect.top
-    console.log("x: " + x + " y: " + y)
-    let Last_User = document.getElementById('Last_User')
-    Last_User.innerHTML = `Last user: <b>YOU</b>`
-    isDrawing = true
+    const rect = canvas.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+    console.log("x: " + x + " y: " + y);
+    let Last_User = document.getElementById('Last_User');
+    Last_User.innerHTML = `Last user: <b>YOU</b>`;
+    isDrawing = true;
   }
   else {
     let user_message = document.getElementById('user_message');
     user_message.style = "color:Red;";
     user_message.innerHTML = `Not registered! Please register to use canvas`;
   }
-})
+});
 
 // On mousemove event, call the function to draw line on canvas
 canvas.addEventListener('mousemove', e => {
@@ -258,15 +256,15 @@ socket.on('share figure', (figure) => {
 })
 // Broadcasting changes for lines to all users
 socket.on('share Line', (line) => {
-  let Last_User = document.getElementById('Last_User')
-  Last_User.innerHTML = `Last user: <b>${line.user}</b>`
-  drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size)
+  let Last_User = document.getElementById('Last_User');
+  Last_User.innerHTML = `Last user: <b>${line.user}</b>`;
+  drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size);
 })
 
 // Get the image url from canvas and display it new tab
 function displayImg() {
   var myImageUrl = canvas.toDataURL("image/png");
-  console.log(myImageUrl)
+  console.log(myImageUrl);
   var newWin = window.open('#myImage',target="_blank");
   var img_div = document.createElement("div");
   img_div.id = `myImg`;

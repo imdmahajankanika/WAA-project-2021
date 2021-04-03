@@ -1,7 +1,7 @@
-var figs = []
-var username = ''
+var figs = [];
+var username = '';
 var figure_size = document.getElementById("figureSize");
-const canvas = document.querySelector('#myCanvas')
+const canvas = document.querySelector('#myCanvas');
 canvas.width = document.getElementById("drawingbox").clientWidth;
 canvas.height = document.getElementById("drawingbox").clientHeight;
 var shape = document.getElementById("shapes");
@@ -13,9 +13,8 @@ let isDrawing = false;
 let x = 0;
 let y = 0;
 
-
 // initiate canvas 2d context
-const ctx = canvas.getContext('2d')
+const ctx = canvas.getContext('2d');
 addEventListener('load', () => {
     document.getElementById('draw').disabled = true;
     let input = document.getElementById('username');
@@ -42,20 +41,21 @@ function clearCanvas() {
 
 // Register the user before starting drawing
 function registerUser() {
-  let input = document.getElementById('username')
-  let draw_btn = document.getElementById('draw')
-  let user_message = document.getElementById('user_message')
-  let save_btn = document.getElementById('save_image')
+  let input = document.getElementById('username');
+  let draw_btn = document.getElementById('draw');
+  let user_message = document.getElementById('user_message');
+  let save_btn = document.getElementById('save_image');
+  // Clear canvas whenever user registers 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (input.value.length >= 6) {
 
+  if (input.value.length >= 6) {
     //Unlock draw button
     if (draw_btn.disabled == true) {
-      draw_btn.disabled = false
+      draw_btn.disabled = false;
     }
-
+    // Unlock Save image button
     if (save_btn.disabled == true) {
-      save_btn.disabled = false
+      save_btn.disabled = false;
     }
     username = input.value;
     user_message.style = "color:Green;";
@@ -67,7 +67,7 @@ function registerUser() {
     if (save_btn.disabled == false) { save_btn.disabled = true }
     username = input.value;
     user_message.style = "color:Red;";
-    user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`
+    user_message.innerHTML = `username didn't match length criteria! Please register with username length >= 6`;
 
   }
 }
@@ -75,15 +75,15 @@ function registerUser() {
 
 // Draw figures
 function draw() {
-  let shape = document.getElementById('shapes').value
+  let shape = document.getElementById('shapes').value;
   if (shape == 'Triangle') {
-    drawTriangle()
+    drawTriangle();
   }
   else if (shape == 'Square') {
-    drawSquare()
+    drawSquare();
   }
   else if (shape == 'Circle') {
-    drawCircle()
+    drawCircle();
   }
 
 }
@@ -111,7 +111,7 @@ function drawTriangle(figSize = parseInt(document.getElementById('figureSize').v
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(triangle)
+    sendData(triangle);
   }
 }
 // Draw Square
@@ -132,7 +132,7 @@ function drawSquare(figSize = parseInt(document.getElementById('figureSize').val
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(square)
+    sendData(square);
   }
 }
 // Draw Circle
@@ -156,7 +156,7 @@ function drawCircle(figSize = parseInt(document.getElementById('figureSize').val
     backgroundColor: background_color
   }
   if (new_fig) {
-    sendData(circle)
+    sendData(circle);
   }
 
 }
@@ -167,7 +167,7 @@ function getStartingPoint(figSize, borderSize) {
   //let y = (Math.random()*(innerHeight - figSize - borderSize)) + borderSize
   var x = Math.floor(Math.random() * (canvas.width));
   var y = Math.round(Math.random() * (canvas.height));
-  return [x, y]
+  return [x, y];
 }
 
 // Drawing line using pencil
@@ -202,21 +202,21 @@ function drawCircleAtCursor(x, y, canvas, event) {
 */
 // Show username who drew last on canvas
 canvas.addEventListener('mousedown', function (e) {
-  if (username != '') {
-    const rect = canvas.getBoundingClientRect()
-    x = e.clientX - rect.left
-    y = e.clientY - rect.top
-    console.log("x: " + x + " y: " + y)
-    let Last_User = document.getElementById('Last_User')
-    Last_User.innerHTML = `Last user: <b>YOU</b>`
-    isDrawing = true
-  }
-  else {
-    let user_message = document.getElementById('user_message');
-    user_message.style = "color:Red;";
-    user_message.innerHTML = `Not registered! Please register to use canvas`
-  }
-})
+    if (username != '') {
+        const rect = canvas.getBoundingClientRect();
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+        console.log("x: " + x + " y: " + y);
+        let Last_User = document.getElementById('Last_User');
+        Last_User.innerHTML = `Last user: <b>YOU</b>`;
+        isDrawing = true;
+    }
+    else {
+        let user_message = document.getElementById('user_message');
+        user_message.style = "color:Red;";
+        user_message.innerHTML = `Not registered! Please register to use canvas`;
+    }
+});
 
 // On mousemove event, call the function to draw line on canvas
 canvas.addEventListener('mousemove', e => {
@@ -252,22 +252,22 @@ function sendLine(data) {
 }
 socket.on('share figure', (figure) => {
   if (figure.shape == 'Triangle') {
-    drawTriangle(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false)
+    drawTriangle(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false);
   }
   else if (figure.shape == 'Square') {
-    drawSquare(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false)
+    drawSquare(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false);
   }
   else if (figure.shape == 'Circle') {
-    drawCircle(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false)
+    drawCircle(figure.figSize, figure.borderSize, figure.start, figure.borderColor, figure.backgroundColor, false);
   }
 
-})
+});
 
 // Send lines drawn by mouse, over network
 socket.on('share Line', (line) => {
-  let Last_User = document.getElementById('Last_User')
-  Last_User.innerHTML = `Last user: <b>${line.user}</b>`
-  drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size)
+  let Last_User = document.getElementById('Last_User');
+  Last_User.innerHTML = `Last user: <b>${line.user}</b>`;
+  drawLine(line.x, line.y, line.x2, line.y2, line.pencil_color, line.pencil_size);
 })
 
 // Function to save images to server
@@ -277,10 +277,10 @@ function save_image() {
   let ts = (now.getDate()) + '.' + (now.getMonth() + 1) + '.' + now.getFullYear() + "_" + now.getHours() + '.'
       + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + '.' + ((now.getSeconds() < 10) ? ("0" + now.getSeconds()) : (now.getSeconds()));
 
-  let formData = new FormData()
+  let formData = new FormData();
   formData.append('username', username);
-  formData.append('image', url)
-  formData.append('timestamp', ts)
+  formData.append('image', url);
+  formData.append('timestamp', ts);
   fetch('/upload', {
     method: 'POST',
     body: formData
@@ -311,14 +311,11 @@ function saved_images() {
         newWin.document.write(img_div.innerHTML);
         count += 1;
       }
-        newWin.document.close();
+      newWin.document.close();
     }, function onError(error) {
       //console.log("Error: "+error);
       newWin.document.write(`<h2>Image not found in DB!</h2><p>Draw something on canvas and save the image!</p>`);
       newWin.document.close();
-    }
-    );
-
-
+    });
 }
 
