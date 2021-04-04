@@ -306,13 +306,7 @@ function saved_images() {
         console.log("Relative Path",relativePath)
         var img_div = document.createElement("div");
         img_div.id = `uid_${count}`;
-          img_div.innerHTML = ` <ul id="uList_${count}" class="uList" style="list-style-type: none; text-align:left; display: inline-block; margin: 5px 0px; padding: 10px;background: #f9f9f9;border: 1px solid #dadada;">
-                                   <li>  <strong> Username: ${username} </strong> <br><br> 
-                                         <strong> Image Url: </strong> <a href="${relativePath}" target="_blank">Link</a><br><br> 
-                                         <strong> DateTime: ${date} ${time}</strong><br> <br>
-                                         <a href = "${relativePath}" target="_blank"><img src="${relativePath}" style="background:white; border:1px solid black;" width="100%"></a>
-                                   </li>
-                                </ul>`;
+        img_div.innerHTML = ` <ul id="uList_${count}" class="uList" style="list-style-type: none; text-align:left; display: inline-block; margin: 5px 0px; padding: 10px;background: #f9f9f9;border: 1px solid #dadada;"><li>  <strong> Username: ${username} </strong> <br><br> <strong> Image Url: </strong> <a href="${relativePath}" target="_blank">Link</a><br><br> <strong> DateTime: ${date} ${time}</strong><br> <br></li><ul>`;
         // Append the saved images data on new page
         newWin.document.write(img_div.innerHTML);
         count += 1;
