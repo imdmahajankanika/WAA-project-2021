@@ -1,129 +1,131 @@
 body {
-  font-family: "nyt-cheltenham", "georgia", "times new roman", times, serif;
-  text-align: center;
-  position: relative;
-  
+    font-family: "nyt-cheltenham", "georgia", "times new roman", times, serif;
+    text-align: center;
+    position: relative;
 }
-h1{
-text-align:center;
-font-family: "nyt-cheltenham", "georgia", "times new roman", times, serif;
-background-color: palevioletred;  
+
+h1 {
+    text-align: center;
+    font-family: "nyt-cheltenham", "georgia", "times new roman", times, serif;
+    background-color: palevioletred;
 }
 
 
-#uList{
-  list-style-type: none;
-  text-align:left;
-  display: inline-block;
-  margin: 5px 0px;
-  padding: 10px;
-}
-.uList2{
-  list-style-type: none;
-  text-align:left;
-  display: inline-block;
-  margin: 5px 0px;
-  padding: 10px;
-}
-
-p{
-  text-align:center;
-}
-li{
-  display: inline-block;
-  margin: 6px 0px;
-  background: #f9f9f9;
-  border: 1px solid #dadada;
-  padding: 10px;
-  width: 500px;
-  height: 200px;
-  
-}
-
-
-.credits_info img{
-  width:250px;
-  height:250px;
-}
-
-#uList img {
-  float: right;
-  width:270px;
-  height:250px;
-  
-}
-
-.display_movie img{
-  float: right;
-  width:270px;
-  height:220px;
-  
-}
-#person_details{
-  background: #f9f9f9;
-  border: 1px solid #dadada;
-  margin: 5px 0px;
-  display: inline-block;
-  padding: 10px;
-  width: 500px;
-  
-}
-#movie_details{
-  background: #f9f9f9;
-  border: 1px solid #dadada;
-  margin: 5px 0px;
-  display: inline-block;
-  padding: 10px;
-  width: 500px;
-  
-}
-
-
-input { 
-	padding: 8px;
-	font-size: 12px;
-  display: inline-block;
-  
-}
-button { 
-	padding: 8px;
-	font-size: 12px;
-  display: inline-block;
-  
-}
-input:focus, a:active {
-    background-color: yellow;
-}
-
-@media screen and (max-width:600px) {
-  #uList img {
-  width:100px;
-  height:100px;
-  }
-  
-  .uList2{
+#uList {
     list-style-type: none;
-    text-align:left;
+    text-align: left;
     display: inline-block;
-   
-  }
-  .display_movie img{
-    width:100px;
-    height:100px;
-  }
-  #person_details{
-    width: 300px;
-  }
-  #movie_details{
-    width:300px;
-  }
-  li{
+    margin: 5px 0px;
+    padding: 10px;
+}
+
+.uList2 {
+    list-style-type: none;
+    text-align: left;
+    display: inline-block;
+    margin: 5px 0px;
+    padding: 10px;
+}
+
+p {
+    text-align: center;
+}
+
+li {
     display: inline-block;
     margin: 6px 0px;
     background: #f9f9f9;
     border: 1px solid #dadada;
     padding: 10px;
-    width: 300px;
-    height: 120px;
-  }
- }
+    width: 500px;
+    height: 200px;
+}
+
+
+.credits_info img {
+    width: 250px;
+    height: 250px;
+}
+
+#uList img {
+    float: right;
+    width: 250px;
+    height: 200px;
+}
+
+.display_movie img {
+    float: right;
+    width: 250px;
+    height: 180px;
+}
+
+#person_details {
+    background: #f9f9f9;
+    border: 1px solid #dadada;
+    margin: 5px 0px;
+    display: inline-block;
+    padding: 10px;
+    width: 500px;
+}
+
+#movie_details {
+    background: #f9f9f9;
+    border: 1px solid #dadada;
+    margin: 5px 0px;
+    display: inline-block;
+    padding: 10px;
+    width: 500px;
+}
+
+
+input {
+    padding: 8px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+button {
+    padding: 8px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+input:focus, a:active {
+    background-color: yellow;
+}
+
+@media screen and (max-width:600px) {
+    #uList img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .uList2 {
+        list-style-type: none;
+        text-align: left;
+        display: inline-block;
+    }
+
+    .display_movie img {
+        width: 100px;
+        height: 100px;
+    }
+
+    #person_details {
+        width: 300px;
+    }
+
+    #movie_details {
+        width: 300px;
+    }
+
+    li {
+        display: inline-block;
+        margin: 6px 0px;
+        background: #f9f9f9;
+        border: 1px solid #dadada;
+        padding: 10px;
+        width: 300px;
+        height: 120px;
+    }
+}
