@@ -16,7 +16,7 @@ const { cpuUsage } = require('process');
 const { userInfo } = require('os');
 */
 const DATABASE_NAME = 'imgDB'; // DB name in mongoDB
-const DB_URI = `mongodb://localhost:27017/${DATABASE_NAME}`;
+const DB_URI = `mongodb://localhost:27017/${DATABASE_NAME}`; // Url for mongoDB installed on local machine'
 const client = new MongoClient(process.env.MONGODB_URI || DB_URI);
 let collection = null;
 let db = null;

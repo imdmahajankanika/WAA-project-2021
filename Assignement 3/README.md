@@ -17,13 +17,21 @@ Create a movie quizz static web application using the tmdb api
 6. If the answer is good, add a new div below the form div with the movie info : title, image and release date of the movie
 7. GO TO 2.
 
-Users must never enter the same movie name twice. if they do , don't accept the answer and display an adapted error message.
+Users must never enter the same movie name twice. if they do, don't accept the answer and display an adapted error message.
+
+## How to run...
+<ul>
+<li>Clone the repo and navigate to the project folder</li>
+<li>Open index.html</li>
+</ul>
+
+## Note:-
+<ul>
+<li>Api key is hardcoded as I couldn't avoid to expose it without some sort of backend code.</li>
+<li><b>"index.php"</b> file is added to deploy static HTML on Heroku.</li>
+</ul>
 
 ## Available on a public web url**
 
 App is available on Heroku and can be accessed by below url:-
 https://movie-quiz-assignment-3.herokuapp.com
-
-<b>Note: index.php file is added to deploy static HTML on Heroku </b>
-
-
